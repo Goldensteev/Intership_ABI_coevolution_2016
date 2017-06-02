@@ -1,0 +1,15 @@
+# @ job_name=testjob
+# @ output = $(job_name).$(jobid)
+# @ error = $(output)
+# @ job_type = serial
+# @ class = A
+# @ environment=JOBID=$(jobid)
+# @ queue
+grep "^# @" $0
+set -vx
+cd $TMPDIR
+cp $LOADL_STEP_INITDIR/call_fastML.py
+cp $LOADL_STEP_INITDIR/DATA/
+cp $LOADL_STEP_INITDIR/FASTML.v3.1/
+time python call_fastML.py
+cp ./FASTML_RUNS/ $LOADL_STEP_INITDIR/FASTML_RUNS/*.$JOBIDq
